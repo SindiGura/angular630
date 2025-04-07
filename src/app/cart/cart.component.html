@@ -1,0 +1,34 @@
+<h1>Your Cart</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Item</th><th>Quantity</th><th>Price</th><th>Total</th><th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="cart.length === 0">
+      <td colspan="5">Your cart is empty.</td>
+    </tr>
+    <tr *ngFor="let item of cart; let i = index">
+      <td>{{ item.name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>${{ item.price }}</td>
+      <td>${{ (item.quantity * item.price).toFixed(2) }}</td>
+      <td><button (click)="removeItem(i)">Remove</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Choose Delivery Option</h3>
+<label>Select Branch:</label>
+<select [(ngModel)]="selectedBranch">
+  <option *ngFor="let branch of branches" [value]="branch.address">{{ branch.name }}</option>
+</select>
+
+<label>Enter Your Address:</label>
+<input type="text" [(ngModel)]="userAddress" placeholder="e.g., 123 Main St">
+
+<button (click)="calculateRoute()">Show Route</button>
+<div id="map" style="width: 100%; height: 400px;"></div>
+
+<button (click)="saveTrip()">Proceed to Checkout</button>
